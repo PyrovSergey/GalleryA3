@@ -5,13 +5,13 @@ import android.content.Context;
 
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.model.dto.User;
+import ru.pyrovsergey.gallerya3.model.dto.Photo;
 
-public class UsersLoader extends AsyncTaskLoader<List<User>> {
+public class PhotoLoader extends AsyncTaskLoader<List<Photo>> {
 
     private String url;
 
-    public UsersLoader(Context context, String url) {
+    public PhotoLoader(Context context, String url) {
         super(context);
         this.url = url;
     }
@@ -22,7 +22,7 @@ public class UsersLoader extends AsyncTaskLoader<List<User>> {
     }
 
     @Override
-    public List<User> loadInBackground() {
-        return QueryUtils.getUsersList(url);
+    public List<Photo> loadInBackground() {
+        return QueryUtils.getPhotoList(url);
     }
 }

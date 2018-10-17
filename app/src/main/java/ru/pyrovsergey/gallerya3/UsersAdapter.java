@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.app.App;
 import ru.pyrovsergey.gallerya3.model.dto.User;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
@@ -33,7 +31,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         holder.positionItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(App.getInstance(), String.valueOf(user.getId()), Toast.LENGTH_SHORT).show();
+                PhotoActivity.startDetailActivity(user.getId());
             }
         });
     }
