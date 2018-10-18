@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements HeadView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter = HeadPresenter.getPresenter();
+        presenter = new HeadPresenter();
+        presenter.onAttach(this);
         progressBar = findViewById(R.id.head_progress_bar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.users);
         RecyclerView recyclerView = findViewById(R.id.users_recycler_view);
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements HeadView {
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.onAttach(this);
         if (ConnectionUtils.checkInternetConnection()) {
             presenter.initUserLoader();
         }

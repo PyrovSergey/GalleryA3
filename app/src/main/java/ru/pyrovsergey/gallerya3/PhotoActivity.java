@@ -40,8 +40,10 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView, Album
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.photos);
         progressBar = findViewById(R.id.photos_progress_bar);
         userId = getIntent().getLongExtra(KEY_ID, 0);
-        albumPresenter = AlbumPresenter.getPresenter();
-        photoPresenter = PhotoPresenter.getPresenter();
+        albumPresenter = new AlbumPresenter();
+        photoPresenter = new PhotoPresenter();
+        albumPresenter.onAttach(this);
+        photoPresenter.onAttach(this);
         RecyclerView recyclerView = findViewById(R.id.gallery_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         photoAdapter = new PhotoAdapter();
@@ -59,8 +61,6 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView, Album
     @Override
     protected void onResume() {
         super.onResume();
-        photoPresenter.onAttach(this);
-        albumPresenter.onAttach(this);
         if (ConnectionUtils.checkInternetConnection()) {
             albumPresenter.initAlbumsLoader(userId);
         }

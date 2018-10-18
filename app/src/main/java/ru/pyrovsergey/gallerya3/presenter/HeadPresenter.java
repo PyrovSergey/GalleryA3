@@ -13,19 +13,19 @@ import ru.pyrovsergey.gallerya3.model.network.UsersLoader;
 public class HeadPresenter implements LoaderManager.LoaderCallbacks<List<User>> {
     private static final int USERS_LOADER_ID = 1;
     private static final String USERS_URL_REQUEST = "https://jsonplaceholder.typicode.com/users";
-    private static HeadPresenter myHeadPresenter;
+//    private static HeadPresenter myHeadPresenter;
     private HeadView view;
     private UsersLoader usersLoader;
 
-    private HeadPresenter() {
+    public HeadPresenter() {
     }
 
-    public static synchronized HeadPresenter getPresenter() {
-        if (myHeadPresenter == null) {
-            myHeadPresenter = new HeadPresenter();
-        }
-        return myHeadPresenter;
-    }
+//    public static synchronized HeadPresenter getPresenter() {
+//        if (myHeadPresenter == null) {
+//            myHeadPresenter = new HeadPresenter();
+//        }
+//        return myHeadPresenter;
+//    }
 
     public void onAttach(HeadView view) {
         this.view = view;

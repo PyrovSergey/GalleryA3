@@ -15,8 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.model.network.ImageLoader;
 import ru.pyrovsergey.gallerya3.model.pojo.Photo;
+import ru.pyrovsergey.gallerya3.model.network.ImageLoader;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
     private List<Photo> photos;
@@ -58,7 +58,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     }
 
     void stopAllDownloads() {
-        if (loaders != null) {
+        if (!loaders.isEmpty()) {
             for (int i = 0; i < loaders.size(); i++) {
                 loaders.get(i).cancel(true);
             }
@@ -66,11 +66,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageViewPhoto;
-        private TextView textViewTitle;
+        ProgressBar progressBar;
+        ImageView imageViewPhoto;
+        TextView textViewTitle;
 
         ViewHolder(View itemView) {
             super(itemView);
+            progressBar = itemView.findViewById(R.id.progress_bar);
             imageViewPhoto = itemView.findViewById(R.id.image_view_photo);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
         }
