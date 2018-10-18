@@ -23,7 +23,13 @@ import ru.pyrovsergey.gallerya3.model.pojo.Photo;
 import ru.pyrovsergey.gallerya3.model.pojo.User;
 
 public final class QueryUtils {
+    private static final String USER_ID = "userId";
     private static final String GET = "GET";
+    private static final String ALBUM_ID = "albumId";
+    private static final String ID = "id";
+    private static final String TITLE = "title";
+    private static final String URL = "url";
+    private static final String NAME = "name";
 
     static List<Photo> getPhotoList(String requestUrl) {
         URL url = createUrl(requestUrl);
@@ -45,18 +51,18 @@ public final class QueryUtils {
         try {
             JSONArray jsonArray = new JSONArray(requestJSON);
             for (int i = 0; i < jsonArray.length(); i++) {
-                long albumId;
-                long id;
+                int albumId;
+                int id;
                 String title;
                 String url;
                 JSONObject currentPhoto = jsonArray.optJSONObject(i);
                 if (currentPhoto == null) {
                     continue;
                 }
-                albumId = currentPhoto.optLong("albumId");
-                id = currentPhoto.optLong("id");
-                title = currentPhoto.optString("title");
-                url = currentPhoto.optString("url");
+                albumId = currentPhoto.optInt(ALBUM_ID);
+                id = currentPhoto.optInt(ID);
+                title = currentPhoto.optString(TITLE);
+                url = currentPhoto.optString(URL);
                 photos.add(new Photo(albumId, id, title, url));
             }
 
@@ -86,14 +92,14 @@ public final class QueryUtils {
         try {
             JSONArray jsonArray = new JSONArray(requestJSON);
             for (int i = 0; i < jsonArray.length(); i++) {
-                long id;
+                int id;
                 String name;
                 JSONObject currentUser = jsonArray.optJSONObject(i);
                 if (currentUser == null) {
                     continue;
                 }
-                id = currentUser.optLong("id");
-                name = currentUser.optString("name");
+                id = currentUser.optInt(ID);
+                name = currentUser.optString(NAME);
                 users.add(new User(id, name));
             }
 
@@ -123,17 +129,17 @@ public final class QueryUtils {
         try {
             JSONArray jsonArray = new JSONArray(requestJSON);
             for (int i = 0; i < jsonArray.length(); i++) {
-                long userId;
-                long id;
+                int id;
+                int userId;
                 String title;
                 JSONObject currentAlbum = jsonArray.optJSONObject(i);
                 if (currentAlbum == null) {
                     continue;
                 }
-                userId = currentAlbum.optLong("userId");
-                id = currentAlbum.optLong("id");
-                title = currentAlbum.optString("title");
-                albums.add(new Album(userId, id, title));
+                id = currentAlbum.optInt(ID);
+                userId = currentAlbum.optInt(USER_ID);
+                title = currentAlbum.optString(TITLE);
+                albums.add(new Album(id, userId, title));
             }
 
         } catch (JSONException e) {

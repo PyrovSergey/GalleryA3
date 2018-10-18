@@ -3,22 +3,22 @@ package ru.pyrovsergey.gallerya3.model.pojo;
 import java.util.Objects;
 
 public class Album {
-    private long userId;
-    private long id;
+    private int id;
+    private int userId;
     private String title;
 
-    public Album(long userId, long id, String title) {
-        this.userId = userId;
+    public Album(int id, int userId, String title) {
         this.id = id;
+        this.userId = userId;
         this.title = title;
-    }
-
-    public long getUserId() {
-        return userId;
     }
 
     public long getId() {
         return id;
+    }
+
+    public long getUserId() {
+        return userId;
     }
 
     public String getTitle() {

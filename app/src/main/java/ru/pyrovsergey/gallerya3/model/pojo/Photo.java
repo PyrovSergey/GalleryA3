@@ -3,12 +3,12 @@ package ru.pyrovsergey.gallerya3.model.pojo;
 import java.util.Objects;
 
 public class Photo {
-    private long albumId;
-    private long id;
+    private int albumId;
+    private int id;
     private String title;
     private String url;
 
-    public Photo(long albumId, long id, String title, String url) {
+    public Photo(int albumId, int id, String title, String url) {
         this.albumId = albumId;
         this.id = id;
         this.title = title;

@@ -21,6 +21,7 @@ import ru.pyrovsergey.gallerya3.presenter.AlbumPresenter;
 import ru.pyrovsergey.gallerya3.presenter.AlbumView;
 import ru.pyrovsergey.gallerya3.presenter.PhotoPresenter;
 import ru.pyrovsergey.gallerya3.presenter.PhotoView;
+import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
 
 public class PhotoActivity extends AppCompatActivity implements PhotoView, AlbumView {
     private static final int ALBUMS_LOADER_ID = 2;
@@ -60,7 +61,7 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView, Album
         super.onResume();
         photoPresenter.onAttach(this);
         albumPresenter.onAttach(this);
-        if (App.checkInternetConnection()) {
+        if (ConnectionUtils.checkInternetConnection()) {
             albumPresenter.initAlbumsLoader(userId);
         }
     }

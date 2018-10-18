@@ -5,8 +5,8 @@ import android.content.Context;
 
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.app.App;
 import ru.pyrovsergey.gallerya3.model.pojo.Photo;
+import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
 
 public class PhotoLoader extends AsyncTaskLoader<List<Photo>> {
 
@@ -23,7 +23,7 @@ public class PhotoLoader extends AsyncTaskLoader<List<Photo>> {
 
     @Override
     protected void onStartLoading() {
-        if (App.checkInternetConnection()) {
+        if (ConnectionUtils.checkInternetConnection()) {
             forceLoad();
         }
     }

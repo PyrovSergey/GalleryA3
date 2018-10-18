@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import ru.pyrovsergey.gallerya3.app.App;
+import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
 
 public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
     @SuppressLint("StaticFieldLeak")
@@ -102,7 +103,7 @@ public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
         if (bitmap != null) {
             image.setImageBitmap(bitmap);
         } else {
-            App.checkInternetConnection();
+            ConnectionUtils.checkInternetConnection();
         }
         image = null;
     }

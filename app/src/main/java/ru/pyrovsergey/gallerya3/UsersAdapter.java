@@ -11,8 +11,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.app.App;
 import ru.pyrovsergey.gallerya3.model.pojo.User;
+import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
@@ -36,7 +36,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         holder.positionItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (App.checkInternetConnection()) {
+                if (ConnectionUtils.checkInternetConnection()) {
                     PhotoActivity.startDetailActivity(user.getId());
                 }
             }
@@ -54,8 +54,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout positionItem;
-        TextView userName;
+        private RelativeLayout positionItem;
+        private TextView userName;
 
         ViewHolder(View itemView) {
             super(itemView);
