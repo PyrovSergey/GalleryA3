@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.pyrovsergey.gallerya3.model.pojo.User;
-import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
+import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 

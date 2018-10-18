@@ -21,21 +21,16 @@ public class AlbumPresenter implements LoaderManager.LoaderCallbacks<List<Album>
         this.view = view;
     }
 
-    public void initAlbumsLoader(long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
-        view.startAlbumsLoader(this);
-    }
-
-    public void transferLoader(AlbumsLoader albumsLoader) {
-        this.albumsLoader = albumsLoader;
     }
 
     @Override
     public Loader<List<Album>> onCreateLoader(int id, Bundle args) {
         if (id == ALBUMS_LOADER_ID) {
-            albumsLoader = new AlbumsLoader(App.getInstance().getApplicationContext(), ALBUMS_URL_REQUEST + userId + "/albums");
+            return new AlbumsLoader(App.getInstance().getApplicationContext(), ALBUMS_URL_REQUEST + userId + "/albums");
         }
-        return albumsLoader;
+        return null;
     }
 
     @Override

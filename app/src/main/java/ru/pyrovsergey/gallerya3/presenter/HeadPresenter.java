@@ -13,19 +13,7 @@ import ru.pyrovsergey.gallerya3.model.network.UsersLoader;
 public class HeadPresenter implements LoaderManager.LoaderCallbacks<List<User>> {
     private static final int USERS_LOADER_ID = 1;
     private static final String USERS_URL_REQUEST = "https://jsonplaceholder.typicode.com/users";
-//    private static HeadPresenter myHeadPresenter;
     private HeadView view;
-    private UsersLoader usersLoader;
-
-    public HeadPresenter() {
-    }
-
-//    public static synchronized HeadPresenter getPresenter() {
-//        if (myHeadPresenter == null) {
-//            myHeadPresenter = new HeadPresenter();
-//        }
-//        return myHeadPresenter;
-//    }
 
     public void onAttach(HeadView view) {
         this.view = view;
@@ -35,20 +23,13 @@ public class HeadPresenter implements LoaderManager.LoaderCallbacks<List<User>> 
         view = null;
     }
 
-    public void initUserLoader() {
-        view.startUserLoader(this);
-    }
-
-    public void createdLoader(UsersLoader usersLoader) {
-        this.usersLoader = usersLoader;
-    }
-
     @Override
     public Loader<List<User>> onCreateLoader(int id, Bundle args) {
+
         if (id == USERS_LOADER_ID) {
-            usersLoader = new UsersLoader(App.getInstance().getApplicationContext(), USERS_URL_REQUEST);
+            return new UsersLoader(App.getInstance().getApplicationContext(), USERS_URL_REQUEST);
         }
-        return usersLoader;
+        return null;
     }
 
     @Override

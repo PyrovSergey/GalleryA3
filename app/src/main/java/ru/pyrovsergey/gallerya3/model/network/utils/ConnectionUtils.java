@@ -1,4 +1,4 @@
-package ru.pyrovsergey.gallerya3.utils;
+package ru.pyrovsergey.gallerya3.model.network.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -7,7 +7,7 @@ import android.widget.Toast;
 import ru.pyrovsergey.gallerya3.R;
 import ru.pyrovsergey.gallerya3.app.App;
 
-public class ConnectionUtils {
+public final class ConnectionUtils {
     public static boolean checkInternetConnection() {
         if (!isInternetAvailable()) {
             Toast.makeText(App.getInstance(),

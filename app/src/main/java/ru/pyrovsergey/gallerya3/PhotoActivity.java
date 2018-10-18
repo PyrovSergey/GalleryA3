@@ -13,15 +13,13 @@ import java.util.List;
 import java.util.Objects;
 
 import ru.pyrovsergey.gallerya3.app.App;
-import ru.pyrovsergey.gallerya3.model.network.AlbumsLoader;
-import ru.pyrovsergey.gallerya3.model.network.PhotoLoader;
+import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
 import ru.pyrovsergey.gallerya3.model.pojo.Album;
 import ru.pyrovsergey.gallerya3.model.pojo.Photo;
 import ru.pyrovsergey.gallerya3.presenter.AlbumPresenter;
 import ru.pyrovsergey.gallerya3.presenter.AlbumView;
 import ru.pyrovsergey.gallerya3.presenter.PhotoPresenter;
 import ru.pyrovsergey.gallerya3.presenter.PhotoView;
-import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
 
 public class PhotoActivity extends AppCompatActivity implements PhotoView, AlbumView {
     private static final int ALBUMS_LOADER_ID = 2;
@@ -62,7 +60,8 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView, Album
     protected void onResume() {
         super.onResume();
         if (ConnectionUtils.checkInternetConnection()) {
-            albumPresenter.initAlbumsLoader(userId);
+            albumPresenter.setUserId(userId);
+            startAlbumsLoader();
         }
     }
 
@@ -79,21 +78,18 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView, Album
         super.onDestroy();
     }
 
-    @Override
-    public void startAlbumsLoader(AlbumPresenter albumPresenter) {
-        AlbumsLoader albumsLoader = (AlbumsLoader) getLoaderManager().initLoader(ALBUMS_LOADER_ID, null, albumPresenter);
-        albumPresenter.transferLoader(albumsLoader);
+    private void startAlbumsLoader() {
+        getLoaderManager().initLoader(ALBUMS_LOADER_ID, null, albumPresenter);
     }
 
-    @Override
-    public void startPhotoLoader(PhotoPresenter photoPresenter) {
-        PhotoLoader photoLoader = (PhotoLoader) getLoaderManager().initLoader(PHOTOS_LOADER_ID, null, photoPresenter);
-        photoPresenter.transferLoader(photoLoader);
+    public void startPhotoLoader() {
+        getLoaderManager().initLoader(PHOTOS_LOADER_ID, null, photoPresenter);
     }
 
     @Override
     public void resultLoadAlbumList(List<Album> data) {
-        photoPresenter.initPhotosLoader(data);
+        photoPresenter.setData(data);
+        startPhotoLoader();
     }
 
     @Override

@@ -2,7 +2,7 @@ package ru.pyrovsergey.gallerya3.app;
 
 import android.app.Application;
 
-import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
+import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
 
 public class App extends Application {
     private static Application instance;

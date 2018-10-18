@@ -19,34 +19,30 @@ public class PhotoPresenter implements LoaderManager.LoaderCallbacks<List<Photo>
     private List<Album> albumList;
     private int sizeAlbumList;
     private int currentNumPositionAlbumList = 0;
-
     public void onAttach(PhotoView view) {
         this.view = view;
     }
 
-    public void initPhotosLoader(List<Album> data) {
+    public void setData(List<Album> data) {
         if (data != null) {
             albumList = data;
             sizeAlbumList = data.size() - 1;
-            view.startPhotoLoader(this);
         }
-    }
-
-    public void transferLoader(PhotoLoader photoLoader) {
-        this.photoLoader = photoLoader;
     }
 
     @Override
     public Loader<List<Photo>> onCreateLoader(int id, Bundle args) {
         if (id == PHOTOS_LOADER_ID) {
-            photoLoader = new PhotoLoader(App.getInstance().getApplicationContext(), PHOTOS_URL_REQUEST + albumList.get(currentNumPositionAlbumList).getId() + "/photos");
+            return new PhotoLoader(App.getInstance().getApplicationContext(), PHOTOS_URL_REQUEST + albumList.get(currentNumPositionAlbumList).getId() + "/photos");
         }
-        return photoLoader;
+        return null;
     }
 
     @Override
     public void onLoadFinished(Loader<List<Photo>> loader, List<Photo> data) {
         view.resultLoadPhotoList(data);
+
+        PhotoLoader photoLoader = (PhotoLoader) loader;
         if (currentNumPositionAlbumList < sizeAlbumList) {
             photoLoader.setUrl(PHOTOS_URL_REQUEST + albumList.get(++currentNumPositionAlbumList).getId() + "/photos");
             photoLoader.forceLoad();

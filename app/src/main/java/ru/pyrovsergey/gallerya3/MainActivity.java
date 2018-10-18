@@ -14,7 +14,7 @@ import ru.pyrovsergey.gallerya3.model.network.UsersLoader;
 import ru.pyrovsergey.gallerya3.model.pojo.User;
 import ru.pyrovsergey.gallerya3.presenter.HeadPresenter;
 import ru.pyrovsergey.gallerya3.presenter.HeadView;
-import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
+import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
 
 public class MainActivity extends AppCompatActivity implements HeadView {
     private static final int USERS_LOADER_ID = 1;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements HeadView {
     protected void onResume() {
         super.onResume();
         if (ConnectionUtils.checkInternetConnection()) {
-            presenter.initUserLoader();
+            startUserLoader();
         }
     }
 
@@ -52,10 +52,8 @@ public class MainActivity extends AppCompatActivity implements HeadView {
         super.onDestroy();
     }
 
-    @Override
-    public void startUserLoader(HeadPresenter headPresenter) {
-        UsersLoader usersLoader = (UsersLoader) getLoaderManager().initLoader(USERS_LOADER_ID, null, headPresenter);
-        presenter.createdLoader(usersLoader);
+    private void startUserLoader() {
+        getLoaderManager().initLoader(USERS_LOADER_ID, null, presenter);
     }
 
     @Override

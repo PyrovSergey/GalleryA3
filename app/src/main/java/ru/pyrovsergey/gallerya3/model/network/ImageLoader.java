@@ -1,6 +1,5 @@
 package ru.pyrovsergey.gallerya3.model.network;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -12,16 +11,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 
 import ru.pyrovsergey.gallerya3.app.App;
-import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
+import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
 
 public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
-    @SuppressLint("StaticFieldLeak")
-    private ImageView image;
+
+    private WeakReference<ImageView> image;
 
     public ImageLoader(ImageView image) {
-        this.image = image;
+        this.image = new WeakReference<>(image);
     }
 
     @Override
@@ -100,11 +100,10 @@ public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        if (bitmap != null) {
-            image.setImageBitmap(bitmap);
+        if (bitmap != null && image.get() != null) {
+            image.get().setImageBitmap(bitmap);
         } else {
             ConnectionUtils.checkInternetConnection();
         }
-        image = null;
     }
 }

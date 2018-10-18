@@ -1,4 +1,4 @@
-package ru.pyrovsergey.gallerya3.model.network;
+package ru.pyrovsergey.gallerya3.model.network.utils;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,8 +30,11 @@ public final class QueryUtils {
     private static final String TITLE = "title";
     private static final String URL = "url";
     private static final String NAME = "name";
+    private static final int READ_TIMEOUT = 10000;
+    private static final int CONNECT_TIMEOUT = 15000;
+    private static final int OK = 200;
 
-    static List<Photo> getPhotoList(String requestUrl) {
+    public static List<Photo> getPhotoList(String requestUrl) {
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {
@@ -51,18 +54,14 @@ public final class QueryUtils {
         try {
             JSONArray jsonArray = new JSONArray(requestJSON);
             for (int i = 0; i < jsonArray.length(); i++) {
-                int albumId;
-                int id;
-                String title;
-                String url;
                 JSONObject currentPhoto = jsonArray.optJSONObject(i);
                 if (currentPhoto == null) {
                     continue;
                 }
-                albumId = currentPhoto.optInt(ALBUM_ID);
-                id = currentPhoto.optInt(ID);
-                title = currentPhoto.optString(TITLE);
-                url = currentPhoto.optString(URL);
+                int albumId = currentPhoto.optInt(ALBUM_ID);
+                int id = currentPhoto.optInt(ID);
+                String title = currentPhoto.optString(TITLE);
+                String url = currentPhoto.optString(URL);
                 photos.add(new Photo(albumId, id, title, url));
             }
 
@@ -72,7 +71,7 @@ public final class QueryUtils {
         return photos;
     }
 
-    static List<User> getUsersList(String requestUrl) {
+    public static List<User> getUsersList(String requestUrl) {
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {
@@ -92,14 +91,12 @@ public final class QueryUtils {
         try {
             JSONArray jsonArray = new JSONArray(requestJSON);
             for (int i = 0; i < jsonArray.length(); i++) {
-                int id;
-                String name;
                 JSONObject currentUser = jsonArray.optJSONObject(i);
                 if (currentUser == null) {
                     continue;
                 }
-                id = currentUser.optInt(ID);
-                name = currentUser.optString(NAME);
+                int id = currentUser.optInt(ID);
+                String name = currentUser.optString(NAME);
                 users.add(new User(id, name));
             }
 
@@ -109,7 +106,7 @@ public final class QueryUtils {
         return users;
     }
 
-    static List<Album> getUserAlbumsList(String requestUrl) {
+    public static List<Album> getUserAlbumsList(String requestUrl) {
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {
@@ -129,16 +126,13 @@ public final class QueryUtils {
         try {
             JSONArray jsonArray = new JSONArray(requestJSON);
             for (int i = 0; i < jsonArray.length(); i++) {
-                int id;
-                int userId;
-                String title;
                 JSONObject currentAlbum = jsonArray.optJSONObject(i);
                 if (currentAlbum == null) {
                     continue;
                 }
-                id = currentAlbum.optInt(ID);
-                userId = currentAlbum.optInt(USER_ID);
-                title = currentAlbum.optString(TITLE);
+                int id = currentAlbum.optInt(ID);
+                int userId = currentAlbum.optInt(USER_ID);
+                String title = currentAlbum.optString(TITLE);
                 albums.add(new Album(id, userId, title));
             }
 
@@ -157,12 +151,12 @@ public final class QueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(READ_TIMEOUT);
+            urlConnection.setConnectTimeout(CONNECT_TIMEOUT);
             urlConnection.setRequestMethod(GET);
             urlConnection.connect();
 
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             }

@@ -6,7 +6,8 @@ import android.content.Context;
 import java.util.List;
 
 import ru.pyrovsergey.gallerya3.model.pojo.Photo;
-import ru.pyrovsergey.gallerya3.utils.ConnectionUtils;
+import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
+import ru.pyrovsergey.gallerya3.model.network.utils.QueryUtils;
 
 public class PhotoLoader extends AsyncTaskLoader<List<Photo>> {
 
