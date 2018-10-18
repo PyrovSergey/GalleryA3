@@ -7,20 +7,17 @@ import android.os.Bundle;
 import java.util.List;
 
 import ru.pyrovsergey.gallerya3.app.App;
-import ru.pyrovsergey.gallerya3.model.dto.User;
+import ru.pyrovsergey.gallerya3.model.pojo.User;
 import ru.pyrovsergey.gallerya3.model.network.UsersLoader;
-import ru.pyrovsergey.gallerya3.model.repository.DataRepository;
 
 public class HeadPresenter implements LoaderManager.LoaderCallbacks<List<User>> {
     private static final int USERS_LOADER_ID = 1;
     private static final String USERS_URL_REQUEST = "https://jsonplaceholder.typicode.com/users";
     private static HeadPresenter myHeadPresenter;
-    private DataRepository repository;
     private HeadView view;
     private UsersLoader usersLoader;
 
     private HeadPresenter() {
-        repository = DataRepository.getInstance();
     }
 
     public static synchronized HeadPresenter getPresenter() {
@@ -36,7 +33,6 @@ public class HeadPresenter implements LoaderManager.LoaderCallbacks<List<User>> 
 
     public void onDetach() {
         view = null;
-        this.repository = null;
     }
 
     public void initUserLoader() {
@@ -57,8 +53,9 @@ public class HeadPresenter implements LoaderManager.LoaderCallbacks<List<User>> 
 
     @Override
     public void onLoadFinished(Loader<List<User>> loader, List<User> data) {
-        repository.setRepositoryUserList(data);
-        view.showUsersList(data);
+        if (data != null) {
+            view.showUsersList(data);
+        }
     }
 
     @Override

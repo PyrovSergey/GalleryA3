@@ -18,9 +18,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.model.dto.Album;
-import ru.pyrovsergey.gallerya3.model.dto.Photo;
-import ru.pyrovsergey.gallerya3.model.dto.User;
+import ru.pyrovsergey.gallerya3.model.pojo.Album;
+import ru.pyrovsergey.gallerya3.model.pojo.Photo;
+import ru.pyrovsergey.gallerya3.model.pojo.User;
 
 public final class QueryUtils {
     private static final String GET = "GET";
@@ -30,9 +30,9 @@ public final class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-            Log.e("MyTAG", url.toString());
+            Log.i("MyTAG", url.toString());
         } catch (IOException e) {
-
+            Log.e("MyTAG", e.toString());
         }
         return extractPhotoListFromJson(jsonResponse);
     }
@@ -73,7 +73,7 @@ public final class QueryUtils {
             jsonResponse = makeHttpRequest(url);
             Log.e("MyTAG", url.toString());
         } catch (IOException e) {
-
+            Log.e("MyTAG", e.toString());
         }
         return extractUsersListFromJson(jsonResponse);
     }
@@ -95,7 +95,6 @@ public final class QueryUtils {
                 id = currentUser.optLong("id");
                 name = currentUser.optString("name");
                 users.add(new User(id, name));
-                //Log.i("MyTAG", String.valueOf(id + " / " + name + "\n"));
             }
 
         } catch (JSONException e) {
@@ -111,7 +110,7 @@ public final class QueryUtils {
             jsonResponse = makeHttpRequest(url);
             Log.i("MyTAG", url.toString());
         } catch (IOException e) {
-
+            Log.e("MyTAG", e.toString());
         }
         return extractUserAlbumsListFromJson(jsonResponse);
     }
@@ -135,7 +134,6 @@ public final class QueryUtils {
                 id = currentAlbum.optLong("id");
                 title = currentAlbum.optString("title");
                 albums.add(new Album(userId, id, title));
-                //Log.i("MyTAG", String.valueOf(userId + " / " +id + " / " + title + "\n"));
             }
 
         } catch (JSONException e) {
@@ -163,7 +161,7 @@ public final class QueryUtils {
                 jsonResponse = readFromStream(inputStream);
             }
         } catch (IOException e) {
-
+            Log.e("MyTAG", e.toString());
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -194,7 +192,7 @@ public final class QueryUtils {
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-
+            Log.e("MyTAG", e.toString());
         }
         return url;
     }

@@ -5,7 +5,8 @@ import android.content.Context;
 
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.model.dto.User;
+import ru.pyrovsergey.gallerya3.app.App;
+import ru.pyrovsergey.gallerya3.model.pojo.User;
 
 public class UsersLoader extends AsyncTaskLoader<List<User>> {
 
@@ -18,7 +19,9 @@ public class UsersLoader extends AsyncTaskLoader<List<User>> {
 
     @Override
     protected void onStartLoading() {
-        forceLoad();
+        if (App.checkInternetConnection()) {
+            forceLoad();
+        }
     }
 
     @Override

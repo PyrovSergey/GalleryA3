@@ -5,7 +5,8 @@ import android.content.Context;
 
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.model.dto.Photo;
+import ru.pyrovsergey.gallerya3.app.App;
+import ru.pyrovsergey.gallerya3.model.pojo.Photo;
 
 public class PhotoLoader extends AsyncTaskLoader<List<Photo>> {
 
@@ -16,9 +17,15 @@ public class PhotoLoader extends AsyncTaskLoader<List<Photo>> {
         this.url = url;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     protected void onStartLoading() {
-        forceLoad();
+        if (App.checkInternetConnection()) {
+            forceLoad();
+        }
     }
 
     @Override

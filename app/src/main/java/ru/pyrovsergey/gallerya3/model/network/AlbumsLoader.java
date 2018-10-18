@@ -5,7 +5,7 @@ import android.content.Context;
 
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.model.dto.Album;
+import ru.pyrovsergey.gallerya3.model.pojo.Album;
 
 public class AlbumsLoader extends AsyncTaskLoader<List<Album>> {
 

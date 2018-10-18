@@ -5,17 +5,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.pyrovsergey.gallerya3.model.dto.User;
+import ru.pyrovsergey.gallerya3.app.App;
+import ru.pyrovsergey.gallerya3.model.pojo.User;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
-    private List<User> userList = new ArrayList<>();
+    private List<User> userList;
+
+    public UsersAdapter() {
+        userList = new ArrayList<>();
+    }
 
     @NonNull
     @Override
@@ -31,7 +36,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         holder.positionItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhotoActivity.startDetailActivity(user.getId());
+                if (App.checkInternetConnection()) {
+                    PhotoActivity.startDetailActivity(user.getId());
+                }
             }
         });
     }
@@ -47,7 +54,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout positionItem;
+        RelativeLayout positionItem;
         TextView userName;
 
         ViewHolder(View itemView) {

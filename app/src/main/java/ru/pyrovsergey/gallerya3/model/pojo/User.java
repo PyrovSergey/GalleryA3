@@ -1,4 +1,4 @@
-package ru.pyrovsergey.gallerya3.model.dto;
+package ru.pyrovsergey.gallerya3.model.pojo;
 
 import java.util.Objects;
 

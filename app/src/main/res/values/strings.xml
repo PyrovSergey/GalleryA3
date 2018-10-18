@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Gallery A3</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="check_connection_settings">Check connection settings</string>
+    <string name="photo">Photo</string>
+    <string name="photos">Photos</string>
+    <string name="users">Users</string>
 </resources>
