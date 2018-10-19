@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -18,6 +17,8 @@ import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
 
 public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
 
+    private static final String JPEG = "JPEG_";
+    private static final String JPG = ".jpg";
     private WeakReference<ImageView> image;
 
     public ImageLoader(ImageView image) {
@@ -40,7 +41,6 @@ public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
             InputStream in = new java.net.URL(url).openStream();
             bmp = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
-            Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
         assert bmp != null;
@@ -49,9 +49,8 @@ public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
     }
 
     private void saveBitmap(Bitmap bitmap, int hashcode) {
-        String savedImagePath;
         String hashLink = String.valueOf(hashcode);
-        String imageFileName = "JPEG_" + hashLink + ".jpg";
+        String imageFileName = JPEG + hashLink + JPG;
         File storageDir = App.getInstance().getCacheDir();
         boolean success = true;
         if (!storageDir.exists()) {
@@ -59,8 +58,6 @@ public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
         }
         if (success) {
             File imageFile = new File(storageDir, imageFileName);
-            savedImagePath = imageFile.getAbsolutePath();
-            Log.i("MyTAG", savedImagePath + " path");
             try {
                 OutputStream fOut = new FileOutputStream(imageFile);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
@@ -68,26 +65,16 @@ public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.i("MyTAG", imageFileName + " saved to cache");
         }
     }
 
     private Bitmap loadBitmap(String url) {
         String hashLink = String.valueOf(url.hashCode());
-        String imageFileName = "JPEG_" + hashLink + ".jpg";
+        String imageFileName = JPEG + hashLink + JPG;
         Bitmap bmp = null;
         File storageDir = App.getInstance().getCacheDir();
         if (storageDir.exists()) {
-            Log.i("MyTAG", storageDir + " storage directory exists");
-            Log.i("MyTAG", imageFileName + " attempt to upload file " + storageDir.getPath() + "/" + imageFileName);
             bmp = BitmapFactory.decodeFile(storageDir.getPath() + "/" + imageFileName);
-            if (bmp != null) {
-                Log.i("MyTAG", imageFileName + " loaded from cache");
-            } else {
-                Log.i("MyTAG", imageFileName + " this image is not in the cache");
-            }
-        } else {
-            Log.i("MyTAG", imageFileName + " storage directory does not exist");
         }
         return bmp;
     }
@@ -95,7 +82,6 @@ public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        Log.i("TAG_PROGRESS", values[0].toString());
     }
 
     @Override

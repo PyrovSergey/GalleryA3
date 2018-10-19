@@ -1,7 +1,6 @@
 package ru.pyrovsergey.gallerya3.model.network.utils;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,9 +38,8 @@ public final class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-            Log.i("MyTAG", url.toString());
         } catch (IOException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         }
         return extractPhotoListFromJson(jsonResponse);
     }
@@ -66,7 +64,7 @@ public final class QueryUtils {
             }
 
         } catch (JSONException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         }
         return photos;
     }
@@ -76,9 +74,8 @@ public final class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-            Log.e("MyTAG", url.toString());
         } catch (IOException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         }
         return extractUsersListFromJson(jsonResponse);
     }
@@ -101,7 +98,7 @@ public final class QueryUtils {
             }
 
         } catch (JSONException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         }
         return users;
     }
@@ -111,9 +108,8 @@ public final class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-            Log.i("MyTAG", url.toString());
         } catch (IOException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         }
         return extractUserAlbumsListFromJson(jsonResponse);
     }
@@ -137,7 +133,7 @@ public final class QueryUtils {
             }
 
         } catch (JSONException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         }
         return albums;
     }
@@ -161,7 +157,7 @@ public final class QueryUtils {
                 jsonResponse = readFromStream(inputStream);
             }
         } catch (IOException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -192,7 +188,7 @@ public final class QueryUtils {
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-            Log.e("MyTAG", e.toString());
+            e.printStackTrace();
         }
         return url;
     }

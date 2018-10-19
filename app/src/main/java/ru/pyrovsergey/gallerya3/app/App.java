@@ -2,7 +2,6 @@ package ru.pyrovsergey.gallerya3.app;
 
 import android.app.Application;
 
-import ru.pyrovsergey.gallerya3.model.network.utils.ConnectionUtils;
 
 public class App extends Application {
     private static Application instance;
@@ -11,7 +10,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        ConnectionUtils.checkInternetConnection();
     }
 
     public static Application getInstance() {

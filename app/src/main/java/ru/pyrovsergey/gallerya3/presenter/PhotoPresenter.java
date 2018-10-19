@@ -14,8 +14,8 @@ import ru.pyrovsergey.gallerya3.model.pojo.Photo;
 public class PhotoPresenter implements LoaderManager.LoaderCallbacks<List<Photo>> {
     private static final int PHOTOS_LOADER_ID = 3;
     private static final String PHOTOS_URL_REQUEST = "https://jsonplaceholder.typicode.com/albums/";
+    private static final String PHOTOS = "/photos";
     private PhotoView view;
-    private PhotoLoader photoLoader;
     private List<Album> albumList;
     private int sizeAlbumList;
     private int currentNumPositionAlbumList = 0;
@@ -33,7 +33,7 @@ public class PhotoPresenter implements LoaderManager.LoaderCallbacks<List<Photo>
     @Override
     public Loader<List<Photo>> onCreateLoader(int id, Bundle args) {
         if (id == PHOTOS_LOADER_ID) {
-            return new PhotoLoader(App.getInstance().getApplicationContext(), PHOTOS_URL_REQUEST + albumList.get(currentNumPositionAlbumList).getId() + "/photos");
+            return new PhotoLoader(App.getInstance().getApplicationContext(), PHOTOS_URL_REQUEST + albumList.get(currentNumPositionAlbumList).getId() + PHOTOS);
         }
         return null;
     }
@@ -41,10 +41,9 @@ public class PhotoPresenter implements LoaderManager.LoaderCallbacks<List<Photo>
     @Override
     public void onLoadFinished(Loader<List<Photo>> loader, List<Photo> data) {
         view.resultLoadPhotoList(data);
-
         PhotoLoader photoLoader = (PhotoLoader) loader;
         if (currentNumPositionAlbumList < sizeAlbumList) {
-            photoLoader.setUrl(PHOTOS_URL_REQUEST + albumList.get(++currentNumPositionAlbumList).getId() + "/photos");
+            photoLoader.setUrl(PHOTOS_URL_REQUEST + albumList.get(++currentNumPositionAlbumList).getId() + PHOTOS);
             photoLoader.forceLoad();
         }
     }

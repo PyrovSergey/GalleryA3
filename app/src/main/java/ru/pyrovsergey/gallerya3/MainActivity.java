@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import java.util.List;
 import java.util.Objects;
 
-import ru.pyrovsergey.gallerya3.model.network.UsersLoader;
 import ru.pyrovsergey.gallerya3.model.pojo.User;
 import ru.pyrovsergey.gallerya3.presenter.HeadPresenter;
 import ru.pyrovsergey.gallerya3.presenter.HeadView;

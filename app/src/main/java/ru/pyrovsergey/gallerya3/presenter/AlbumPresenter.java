@@ -13,8 +13,8 @@ import ru.pyrovsergey.gallerya3.model.pojo.Album;
 public class AlbumPresenter implements LoaderManager.LoaderCallbacks<List<Album>> {
     private static final int ALBUMS_LOADER_ID = 2;
     private static final String ALBUMS_URL_REQUEST = "https://jsonplaceholder.typicode.com/users/";
+    private static final String ALBUMS = "/albums";
     private AlbumView view;
-    private AlbumsLoader albumsLoader;
     private long userId;
 
     public void onAttach(AlbumView view) {
@@ -28,7 +28,7 @@ public class AlbumPresenter implements LoaderManager.LoaderCallbacks<List<Album>
     @Override
     public Loader<List<Album>> onCreateLoader(int id, Bundle args) {
         if (id == ALBUMS_LOADER_ID) {
-            return new AlbumsLoader(App.getInstance().getApplicationContext(), ALBUMS_URL_REQUEST + userId + "/albums");
+            return new AlbumsLoader(App.getInstance().getApplicationContext(), ALBUMS_URL_REQUEST + userId + ALBUMS);
         }
         return null;
     }

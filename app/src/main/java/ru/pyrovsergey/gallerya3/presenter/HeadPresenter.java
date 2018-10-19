@@ -25,7 +25,6 @@ public class HeadPresenter implements LoaderManager.LoaderCallbacks<List<User>> 
 
     @Override
     public Loader<List<User>> onCreateLoader(int id, Bundle args) {
-
         if (id == USERS_LOADER_ID) {
             return new UsersLoader(App.getInstance().getApplicationContext(), USERS_URL_REQUEST);
         }
